@@ -24,6 +24,22 @@ def sync_shared_kernel(
 
 
 @task(
+    name="sync-clis",
+    pre=[change_to_root_dir],
+)
+def sync_python_clis(
+    context: Context,
+):
+    """
+    Installs local python CLIs to the virtual environment.
+    """
+    context.run("pip install -q ../../dw_python_clis")
+    context.run("rm -r ../../dw_python_clis/src/dw_python_clis.egg-info")
+    context.run("rm -r ../../dw_python_clis/build")
+    print("Installed local python CLIs to the virtual environment.")
+
+
+@task(
     name="regenerate",
     pre=[change_to_root_dir],
 )
@@ -138,6 +154,7 @@ def install(
 
 collection = Collection(
     sync_shared_kernel,
+    sync_python_clis,
     regenerate_dependencies,
     compile_,
     upgrade,
