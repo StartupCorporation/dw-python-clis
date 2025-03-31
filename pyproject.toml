@@ -1,0 +1,82 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dw-python-clis"
+version = "0.0.1"
+authors = [
+  { name="Panchenko Kirill", email="pnchkirill@gmail.com" },
+]
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+description = "The shared kernel for python microservices."
+requires-python = ">=3.13"
+dependencies = [
+    "invoke",
+    "pip-tools",
+]
+
+[project.optional-dependencies]
+local = [
+    "ipython",
+    "ruff",
+    "pre-commit",
+]
+
+[tool.ruff]
+fix=true
+unsafe-fixes = true
+line-length = 120
+indent-width = 4
+exclude = [
+    "venv",
+    ".git",
+    "__pycache__",
+    ".pytest_cache",
+    "requirements",
+]
+target-version = "py313"
+
+[tool.ruff.lint]
+ignore = ["N818"]
+select = [
+    "I",
+    "F",
+    "E",
+    "W",
+    "N",
+    "A",
+    "COM",
+    "PIE",
+    "T20",
+    "ARG",
+    "ERA",
+    "FAST",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"src/dw_python_clis/*" = ["T201"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
+asyncio_mode = "auto"
+testpaths = [
+    "src/tests",
+]
+pythonpath = [
+    "src",
+]
+
+[tool.ruff.lint.isort]
+lines-after-imports = 2
